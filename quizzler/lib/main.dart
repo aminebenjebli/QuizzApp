@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/question.dart';
+import 'package:quizzler/quizz_brain.dart';
 
+QuizzBrain quizzBrain = QuizzBrain();
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -37,17 +39,12 @@ class _QuizPageState extends State<QuizPage> {
   //   true,
   //   true,
   // ];
-  // 
+  //
   // Question q1 = Question(
   //   questionText: 'You bite into a sandwich and find a slug in it. What do you do?',
   //   questionAnswer: false,
   // );
-  List<Question> questionLibrary = [
-    Question(questionText: 'You bite into a sandwich and find a slug in it. What do you do?', questionAnswer: false),
-    Question(questionText: 'You are walking down the street and see a wallet on the ground. What do you do?', questionAnswer: true),
-    Question(questionText: 'A slug\'s stomach is full of gas. What do you do?', questionAnswer: true),
-  ];
-  int _currentQuestion = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +57,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionLibrary[_currentQuestion].questionText,
+                quizzBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -79,14 +76,15 @@ class _QuizPageState extends State<QuizPage> {
                 backgroundColor: Colors.green, // Text color
               ),
               onPressed: () {
-                bool correctAnswers = questionLibrary[_currentQuestion].questionAnswer;
+                bool correctAnswers =
+                    quizzBrain.getCorrectAnswer();
                 if (correctAnswers == true) {
                   print('user got it right');
                 } else {
                   print('user got it wrong');
                 }
                 setState(() {
-                  _currentQuestion++;
+                  quizzBrain.nextQuestion();
                 });
               },
               child: const Text(
@@ -115,14 +113,15 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswers = questionLibrary[_currentQuestion].questionAnswer;
+                bool correctAnswers =
+                    quizzBrain.getCorrectAnswer();
                 if (correctAnswers == false) {
                   print('user got it right');
                 } else {
                   print('user got it wrong');
                 }
                 setState(() {
-                  _currentQuestion++;
+                  quizzBrain.nextQuestion();
                 });
               },
             ),
@@ -135,4 +134,4 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-//TODO: Add a Question Class 
+//TODO: Add a Question Class
