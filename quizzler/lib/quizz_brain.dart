@@ -42,4 +42,10 @@ class QuizzBrain {
   bool getCorrectAnswer() {
     return questionLibrary[_currentQuestion].questionAnswer;
   }
+  bool isFinished(){
+    return _currentQuestion >= questionLibrary.length - 1;
+  }
+  void reset(){
+    _currentQuestion = 0;
+  }
 }

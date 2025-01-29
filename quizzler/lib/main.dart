@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:quizzler/quizz_brain.dart';
 
 QuizzBrain quizzBrain = QuizzBrain();
@@ -12,7 +13,7 @@ class Quizzler extends StatelessWidget {
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
           ),
         ),
@@ -28,15 +29,42 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+
   void checkAnswer(bool userPickedAnswer) {
-    bool correctAnswers = quizzBrain.getCorrectAnswer();
-    if (userPickedAnswer == correctAnswers) {
+    bool correctAnswer = quizzBrain.getCorrectAnswer();
+    if (userPickedAnswer == correctAnswer) {
       scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
     } else {
       scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
     }
+
     setState(() {
-      quizzBrain.nextQuestion();
+      if (quizzBrain.isFinished()) {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Quiz Finished!",
+          desc: "You have reached the end of the quiz.",
+          buttons: [
+            DialogButton(
+              child: const Text(
+                "Continue",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context); // Close the alert
+                setState(() {
+                  quizzBrain.reset();
+                  scoreKeeper.clear();
+                });
+              },
+              width: 120,
+            )
+          ],
+        ).show();
+      } else {
+        quizzBrain.nextQuestion();
+      }
     });
   }
 
@@ -68,7 +96,7 @@ class _QuizPageState extends State<QuizPage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.green, // Text color
+                backgroundColor: Colors.green,
               ),
               onPressed: () {
                 checkAnswer(true);
@@ -89,7 +117,7 @@ class _QuizPageState extends State<QuizPage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.red, // Text color
+                backgroundColor: Colors.red,
               ),
               child: const Text(
                 'False',
@@ -111,4 +139,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-//TODO:
