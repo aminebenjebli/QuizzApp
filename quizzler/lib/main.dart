@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -26,15 +27,25 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
-  List<String> questions = [
-    'You bite into a sandwich and find a slug in it. What do you do?',
-    'You are walking down the street and see a wallet on the ground. What do you do?',
-    'A slug\'s stomach is full of gas. What do you do?',
-  ];
-  List<bool> answers = [
-    false,
-    true,
-    true,
+  // List<String> questions = [
+  //   'You bite into a sandwich and find a slug in it. What do you do?',
+  //   'You are walking down the street and see a wallet on the ground. What do you do?',
+  //   'A slug\'s stomach is full of gas. What do you do?',
+  // ];
+  // List<bool> answers = [
+  //   false,
+  //   true,
+  //   true,
+  // ];
+  // 
+  // Question q1 = Question(
+  //   questionText: 'You bite into a sandwich and find a slug in it. What do you do?',
+  //   questionAnswer: false,
+  // );
+  List<Question> questionLibrary = [
+    Question(questionText: 'You bite into a sandwich and find a slug in it. What do you do?', questionAnswer: false),
+    Question(questionText: 'You are walking down the street and see a wallet on the ground. What do you do?', questionAnswer: true),
+    Question(questionText: 'A slug\'s stomach is full of gas. What do you do?', questionAnswer: true),
   ];
   int _currentQuestion = 0;
   @override
@@ -49,7 +60,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[_currentQuestion],
+                questionLibrary[_currentQuestion].questionText,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -68,7 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                 backgroundColor: Colors.green, // Text color
               ),
               onPressed: () {
-                bool correctAnswers = answers[_currentQuestion];
+                bool correctAnswers = questionLibrary[_currentQuestion].questionAnswer;
                 if (correctAnswers == true) {
                   print('user got it right');
                 } else {
@@ -104,7 +115,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswers = answers[_currentQuestion];
+                bool correctAnswers = questionLibrary[_currentQuestion].questionAnswer;
                 if (correctAnswers == false) {
                   print('user got it right');
                 } else {
