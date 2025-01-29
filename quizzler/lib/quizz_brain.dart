@@ -1,7 +1,7 @@
 import 'package:quizzler/question.dart';
 
-class QuizzBrain{
-    int _currentQuestion = 0;
+class QuizzBrain {
+  int _currentQuestion = 0;
 
   List<Question> questionLibrary = [
     Question('You can lead a cow down stairs but not up stairs.', false),
@@ -29,16 +29,17 @@ class QuizzBrain{
         'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         true),
   ];
-  void nextQuestion(){
-    if(_currentQuestion < questionLibrary.length - 1){
+  void nextQuestion() {
+    if (_currentQuestion < questionLibrary.length - 1) {
       _currentQuestion++;
     }
   }
-  String getQuestionText(){
+
+  String getQuestionText() {
     return questionLibrary[_currentQuestion].questionText;
   }
-  bool getCorrectAnswer(){
+
+  bool getCorrectAnswer() {
     return questionLibrary[_currentQuestion].questionAnswer;
   }
-
 }

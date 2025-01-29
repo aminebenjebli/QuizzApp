@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzler/question.dart';
 import 'package:quizzler/quizz_brain.dart';
 
 QuizzBrain quizzBrain = QuizzBrain();
@@ -29,21 +28,17 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
-  // List<String> questions = [
-  //   'You bite into a sandwich and find a slug in it. What do you do?',
-  //   'You are walking down the street and see a wallet on the ground. What do you do?',
-  //   'A slug\'s stomach is full of gas. What do you do?',
-  // ];
-  // List<bool> answers = [
-  //   false,
-  //   true,
-  //   true,
-  // ];
-  //
-  // Question q1 = Question(
-  //   questionText: 'You bite into a sandwich and find a slug in it. What do you do?',
-  //   questionAnswer: false,
-  // );
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswers = quizzBrain.getCorrectAnswer();
+    if (userPickedAnswer == correctAnswers) {
+      scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
+    } else {
+      scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
+    }
+    setState(() {
+      quizzBrain.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,16 +71,7 @@ class _QuizPageState extends State<QuizPage> {
                 backgroundColor: Colors.green, // Text color
               ),
               onPressed: () {
-                bool correctAnswers =
-                    quizzBrain.getCorrectAnswer();
-                if (correctAnswers == true) {
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-                setState(() {
-                  quizzBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
               child: const Text(
                 'True',
@@ -113,16 +99,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswers =
-                    quizzBrain.getCorrectAnswer();
-                if (correctAnswers == false) {
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-                setState(() {
-                  quizzBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
@@ -134,4 +111,4 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-//TODO: Add a Question Class
+//TODO:
