@@ -26,21 +26,32 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+  List<String> questions = [
+    'You bite into a sandwich and find a slug in it. What do you do?',
+    'You are walking down the street and see a wallet on the ground. What do you do?',
+    'A slug\'s stomach is full of gas. What do you do?',
+  ];
+  List<bool> answers = [
+    false,
+    true,
+    true,
+  ];
+  int _currentQuestion = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        const Expanded(
+        Expanded(
           flex: 5,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[_currentQuestion],
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25.0,
                   color: Colors.white,
                 ),
@@ -57,13 +68,14 @@ class _QuizPageState extends State<QuizPage> {
                 backgroundColor: Colors.green, // Text color
               ),
               onPressed: () {
+                bool correctAnswers = answers[_currentQuestion];
+                if (correctAnswers == true) {
+                 print('user got it right');
+                } else {
+                  print('user got it wrong');
+                }
                 setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
+                  _currentQuestion++;
                 });
               },
               child: const Text(
@@ -92,19 +104,19 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAnswers = answers[_currentQuestion];
+                if (correctAnswers == false) {
+                 print('user got it right');
+                } else {
+                  print('user got it wrong');
+                }
                 setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
+                  _currentQuestion++;
                 });
               },
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
         Row(
           children: scoreKeeper,
         )
